@@ -1,5 +1,8 @@
+from src.mlproject.exception import CustomException
+
+
 if __name__ == "__main__":
     try:
-        pass
+        1/0
     except Exception as e:
-        print(e)
+        raise CustomException(e)
