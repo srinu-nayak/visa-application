@@ -33,6 +33,7 @@ class DataIngestion:
             logging.info(f"saved the test data")
             test_df.to_csv(self.config.test_data_path, index=False, header=True)
 
+            logging.info(f"sendind train_df and test_df from data_ingestion to data_transforamtion {train_df.shape}, {test_df.shape}")
             return train_df, test_df
 
         except Exception as e:
