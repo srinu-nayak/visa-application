@@ -8,12 +8,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, classification_report,ConfusionMatrixDisplay, \
-                            precision_score, recall_score, f1_score, roc_auc_score,roc_curve
+import pandas as pd
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_colwidth', None)
+
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 
-
+from src.mlproject.utils import evaluate_model
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
 
 @dataclass
 class ModelTrainerConfig:
@@ -23,9 +27,10 @@ class ModelTrainer:
     def __init__(self):
         self.config = ModelTrainerConfig()
 
+
+
     def get_data_for_training(self, train_final, test_final):
         try:
-
 
             X_train = train_final.drop(columns=["case_status"])
             y_train = train_final["case_status"]
@@ -42,7 +47,6 @@ class ModelTrainer:
             logging.info(f"After sampling X_train: {X_train_sampled.shape}, y_train_sampled: {y_train_sampled.shape}")
             logging.info(f"After sampling X_test_sampled: {X_test_sampled.shape}, y_test_sampled: {y_test_sampled.shape}")
 
-
             #models
             models = {
                 "Random Forest": RandomForestClassifier(),
@@ -56,7 +60,6 @@ class ModelTrainer:
                 "AdaBoost Classifier": AdaBoostClassifier()
 
             }
-
 
             #parameters
             params = {
@@ -78,10 +81,10 @@ class ModelTrainer:
                     },
                 }
 
-
-
-
-
+            report = evaluate_model(
+                X_train_sampled, y_train_sampled, X_test_sampled, y_test_sampled, models, params
+            )
+            report.to_csv("artifacts/model_evaluation_report.csv", index=False)
 
 
         except Exception as e:
