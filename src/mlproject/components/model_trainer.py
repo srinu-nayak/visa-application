@@ -3,7 +3,15 @@ from src.mlproject.logger import logging
 from dataclasses import dataclass
 from pathlib import Path
 from imblearn.combine import SMOTETomek, SMOTEENN
-
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report,ConfusionMatrixDisplay, \
+                            precision_score, recall_score, f1_score, roc_auc_score,roc_curve
+from xgboost import XGBClassifier
+from catboost import CatBoostClassifier
 
 
 
@@ -17,19 +25,64 @@ class ModelTrainer:
 
     def get_data_for_training(self, train_final, test_final):
         try:
+
+
             X_train = train_final.drop(columns=["case_status"])
             y_train = train_final["case_status"]
 
             X_test = test_final.drop(columns=["case_status"])
             y_test = test_final["case_status"]
 
-            logging.info(f"X_train: {X_train.shape}, y_train: {y_train.shape}")
-            logging.info(f"X_test: {X_test.shape}, y_test: {y_test.shape}")
+            smt = SMOTEENN(random_state=42, sampling_strategy='minority')
+            X_train_sampled, y_train_sampled = smt.fit_resample(X_train, y_train)
+            X_test_sampled, y_test_sampled = X_test, y_test
 
-            print("X_train shape: ", X_train.shape)
-            print("y_train shape: ", y_train.shape)
-            print("X_test shape: ", X_test.shape)
-            print("y_test shape: ", y_test.shape)
+            logging.info(f"Before sampling X_train: {X_train.shape}, y_train: {y_train.shape}")
+            logging.info(f"#Before sampling X_test: {X_test.shape}, y_test: {y_test.shape}")
+            logging.info(f"After sampling X_train: {X_train_sampled.shape}, y_train_sampled: {y_train_sampled.shape}")
+            logging.info(f"After sampling X_test_sampled: {X_test_sampled.shape}, y_test_sampled: {y_test_sampled.shape}")
+
+
+            #models
+            models = {
+                "Random Forest": RandomForestClassifier(),
+                "Decision Tree": DecisionTreeClassifier(),
+                "Gradient Boosting": GradientBoostingClassifier(),
+                "Logistic Regression": LogisticRegression(),
+                "K-Neighbors Classifier": KNeighborsClassifier(),
+                "XGBClassifier": XGBClassifier(),
+                "CatBoosting Classifier": CatBoostClassifier(verbose=False),
+                "Support Vector Classifier": SVC(),
+                "AdaBoost Classifier": AdaBoostClassifier()
+
+            }
+
+
+            #parameters
+            params = {
+                "XGBClassifier" : {
+                    'max_depth': range(3, 10, 2),
+                    'min_child_weight': range(1, 6, 2)
+                    },
+
+                "Random Forest" : {
+                    "max_depth": [10, 12, None, 15, 20],
+                    "max_features": ['sqrt', 'log2', None],
+                    "n_estimators": [10, 50, 100, 200]
+                    },
+
+                "K-Neighbors Classifier" : {
+                    "algorithm": ['auto', 'ball_tree', 'kd_tree', 'brute'],
+                    "weights": ['uniform', 'distance'],
+                    "n_neighbors": [3, 4, 5, 7, 9],
+                    },
+                }
+
+
+
+
+
+
 
         except Exception as e:
             raise CustomException(e)

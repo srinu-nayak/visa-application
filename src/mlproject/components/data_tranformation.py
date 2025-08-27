@@ -5,8 +5,6 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder, F
 from datetime import date
 import pandas as pd
 from src.mlproject.utils import save_object
-from src.mlproject.logger import logging
-
 from src.mlproject.exception import CustomException
 from dataclasses import dataclass
 from pathlib import Path
@@ -103,8 +101,6 @@ class DataTransformation():
             )
 
             test_final = pd.concat([test_df_transformed, target_series_test], axis=1)
-
-
             save_object(
                 self.config.preprocessor,
                 preprocessor
