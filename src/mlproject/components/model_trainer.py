@@ -12,7 +12,8 @@ import pandas as pd
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', None)
-
+from datetime import datetime
+today = datetime.now().strftime("%Y_%m_%d")
 from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 
@@ -84,7 +85,7 @@ class ModelTrainer:
             report = evaluate_model(
                 X_train_sampled, y_train_sampled, X_test_sampled, y_test_sampled, models, params
             )
-            report.to_csv("artifacts/model_evaluation_report.csv", index=False)
+            report.to_csv(f"artifacts/model_evaluation_report_{today}.csv", index=False)
 
 
         except Exception as e:
