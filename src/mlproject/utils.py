@@ -49,7 +49,7 @@ def connectingToMongo():
 
 def save_object(filename, obj):
     try:
-        logging.info("Saving object")
+        logging.info("Saving preprocessor object")
         Path(filename).parent.mkdir(parents=True, exist_ok=True)
         with open(filename, "wb") as f:
             pickle.dump(obj, f)

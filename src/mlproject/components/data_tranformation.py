@@ -1,6 +1,3 @@
-import logging
-from datetime import date
-import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder, FunctionTransformer, PowerTransformer, \
@@ -8,7 +5,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder, F
 from datetime import date
 import pandas as pd
 from src.mlproject.utils import save_object
-
+from src.mlproject.logger import logging
 
 from src.mlproject.exception import CustomException
 from dataclasses import dataclass
