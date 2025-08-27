@@ -5,6 +5,8 @@ import pandas as pd
 from urllib.parse import quote_plus
 from src.mlproject.logger import logging
 from src.mlproject.exception import CustomException
+from pathlib import Path
+import pickle
 
 # Load .env file
 load_dotenv()
@@ -43,3 +45,14 @@ def connectingToMongo():
 
     except Exception as e:
         raise CustomException(e)
+
+
+def save_object(filename, obj):
+    try:
+        logging.info("Saving object")
+        Path(filename).parent.mkdir(parents=True, exist_ok=True)
+        with open(filename, "wb") as f:
+            pickle.dump(obj, f)
+
+    except Exception as ex:
+        raise CustomException(ex)
