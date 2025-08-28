@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visa Case Status Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Visa Case Status Prediction</h2>
+        <form method="POST">
+            <label>Continent</label>
+            <select name="continent" required>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="North America">North America</option>
+                <option value="South America">South America</option>
+                <option value="Africa">Africa</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+
+            <label>Education</label>
+            <select name="education_of_employee" required>
+                <option value="Doctorate">Doctorate</option>
+                <option value="Master's">Master's</option>
+                <option value="Bachelor's">Bachelor's</option>
+                <option value="High School">High School</option>
+            </select>
+
+            <label>Has Job Experience</label>
+            <select name="has_job_experience" required>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+
+            <label>Requires Job Training</label>
+            <select name="requires_job_training" required>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+
+            <label>Number of Employees</label>
+            <input type="number" name="no_of_employees" required>
+
+            <label>Year of Establishment</label>
+            <input type="number" name="yr_of_estab" required>
+
+            <label>Region of Employment</label>
+            <select name="region_of_employment" required>
+                <option value="South">South</option>
+                <option value="West">West</option>
+                <option value="Midwest">Midwest</option>
+                <option value="Island">Island</option>
+                <option value="Northeast">Northeast</option>
+            </select>
+
+            <label>Prevailing Wage</label>
+            <input type="number" step="0.01" name="prevailing_wage" required>
+
+            <label>Unit of Wage</label>
+            <select name="unit_of_wage" required>
+                <option value="Year">Year</option>
+                <option value="Hour">Hour</option>
+                <option value="Week">Week</option>
+                <option value="Month">Month</option>
+            </select>
+
+            <label>Full Time Position</label>
+            <select name="full_time_position" required>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+            <div class="result">{{ prediction }}</div>
+        {% endif %}
+
+    </div>
+</body>
+</html>
