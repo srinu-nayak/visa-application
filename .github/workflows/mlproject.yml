@@ -37,4 +37,10 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/visa-application:latest
             docker stop visa-app || true
             docker rm visa-app || true
-            docker run --env-file .env -d -p 5001:5000 --name visa-app srinu0930/visa-application:latest
+            docker run -d -p 5001:5000 \
+              -e MONGO_USER=${{ secrets.MONGO_USER }} \
+              -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+              -e MONGO_HOST=${{ secrets.MONGO_HOST }} \
+              -e MONGO_DB=${{ secrets.MONGO_DB }} \
+              -e MONGO_COLLECTION=${{ secrets.MONGO_COLLECTION }} \
+              --name visa-app ${{ secrets.DOCKER_USERNAME }}/visa-application:latest
