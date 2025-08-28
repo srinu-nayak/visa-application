@@ -11,6 +11,7 @@ imblearn
 xgboost
 catboost
 pytest
+seaborn
 
 
 -e .
