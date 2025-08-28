@@ -7,4 +7,6 @@
 2. Fetched data from MongoDB database
 3. Configured DVC for datasets tracking
 4. https://dagshub.com/srinu-nayak/visa-application/experiments#/experiment/m_f02b60227e7f41808bf43536ad13f42d
-5. 
+5. docker pull srinu0930/visa-application:latest
+6. docker run -p 5001:5000 srinu0930/visa-application:latest
+7. 
