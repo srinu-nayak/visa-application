@@ -23,7 +23,7 @@ jobs:
       # Build & Push Docker Image
       - name: Build and Push Docker image
         run: |
-          docker build -t --no-cache ${{ secrets.DOCKER_USERNAME }}/visa-application:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/visa-application:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/visa-application:latest
 
       # Deploy on EC2
