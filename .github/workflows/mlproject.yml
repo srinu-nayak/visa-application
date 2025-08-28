@@ -37,4 +37,4 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/visa-application:latest
             docker stop visa-app || true
             docker rm visa-app || true
-            docker run --env-file .env -d -p 5000:5000 --name visa-app srinu0930/visa-application:latest
+            docker run --env-file .env -d -p 5001:5000 --name visa-app srinu0930/visa-application:latest
